@@ -19,7 +19,7 @@ fn main() {
         .input
         .unwrap_or_else(|| format!("../inputs/day{}.txt", args.day));
     match args.day {
-        1 => day1(file_path),
+        1 => println!("{:?}", day1(file_path)),
         _ => (),
     }
 }
