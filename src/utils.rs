@@ -9,6 +9,15 @@ pub fn parse_numbers_from_file(file_path: String, sep: Option<&str>) -> Vec<i32>
         .collect()
 }
 
+pub fn parse_file(file_path: String) -> Vec<String> {
+    let contents = fs::read_to_string(file_path).expect("Should have been able to read the file");
+    contents
+        .split("\n")
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty())
+        .map(|s| s.parse().unwrap())
+        .collect()
+}
 #[cfg(test)]
 mod tests {
     use super::*;
