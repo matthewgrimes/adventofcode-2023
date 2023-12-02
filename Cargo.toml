@@ -9,3 +9,4 @@ about = "Solution attempt for Advent of Code 2023"
 
 [dependencies]
 clap = { version = "4.4.10", features = ["derive"] }
+proptest = "1.4.0"

@@ -1,6 +1,8 @@
 pub mod day1;
 pub mod utils;
 use day1::day1;
+pub mod day2;
+use day2::day2;
 
 use clap::Parser;
 
@@ -19,7 +21,8 @@ fn main() {
         .input
         .unwrap_or_else(|| format!("../inputs/day{}.txt", args.day));
     match args.day {
-        1 => println!("{:?}", day1(file_path)),
+        1 => println!("{:?}", day1(file_path.as_str())),
+        2 => println!("{:?}", day2(file_path.as_str())),
         _ => (),
     }
 }
