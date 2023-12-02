@@ -60,6 +60,6 @@ mod tests {
     use super::*;
     #[test]
     fn test_day1() {
-        assert_eq!(day1("inputs/day1.txt"), [54940, 54208]);
+        assert_eq!(day1("inputs/2023/day1.txt"), [54940, 54208]);
     }
 }

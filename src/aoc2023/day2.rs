@@ -109,16 +109,16 @@ mod tests {
     use proptest::prelude::*;
     #[test]
     fn test_day2_part1_sample() {
-        assert_eq!(day2("inputs/day2-part1-sample.txt")[0], 8);
+        assert_eq!(day2("inputs/2023/day2-part1-sample.txt")[0], 8);
     }
 
     #[test]
     fn test_day2_part1_answer() {
-        assert_eq!(day2("inputs/day2.txt")[0], 2169);
+        assert_eq!(day2("inputs/2023/day2.txt")[0], 2169);
     }
     #[test]
     fn test_day2_part2_sample() {
-        let lines = parse_file("inputs/day2-part1-sample.txt");
+        let lines = parse_file("inputs/2023/day2-part1-sample.txt");
         let results = DrawResult::from_lines(&lines);
         let powers: Vec<usize> = results
             .iter()
@@ -128,7 +128,7 @@ mod tests {
     }
     #[test]
     fn test_day2_part2_answer() {
-        let lines = parse_file("inputs/day2.txt");
+        let lines = parse_file("inputs/2023/day2.txt");
         let results = DrawResult::from_lines(&lines);
         let powers: usize = results
             .iter()
