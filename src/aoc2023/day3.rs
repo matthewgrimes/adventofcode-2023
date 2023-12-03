@@ -1,44 +1,47 @@
 use crate::utils::*;
 
-fn is_symbol(character: char) -> bool {
-    !character.is_digit(10) & (character != '.')
+fn is_symbol(character: char) -> Option<char> {
+    match !character.is_digit(10) & (character != '.') {
+        true => Some(character),
+        false => None,
+    }
 }
 
 fn check_for_symbols(characters: &Vec<Vec<char>>, row: usize, column: usize) -> bool {
     // row above if there is one
     if row > 1 {
-        if is_symbol(characters[row - 1][column]) {
+        if is_symbol(characters[row - 1][column]).is_some() {
             return true;
         }
         if column > 1 {
-            if is_symbol(characters[row - 1][column - 1]) {
+            if is_symbol(characters[row - 1][column - 1]).is_some() {
                 return true;
             }
         }
         if column < characters[row - 1].len() - 1 {
-            if is_symbol(characters[row - 1][column + 1]) {
+            if is_symbol(characters[row - 1][column + 1]).is_some() {
                 return true;
             }
         }
     }
     // adjacent
     if (column > 1) {
-        if is_symbol(characters[row][(column as isize - 1) as usize]) {
+        if is_symbol(characters[row][(column as isize - 1) as usize]).is_some() {
             return true;
         }
     }
     if (column < characters[row].len() - 1) {
-        if is_symbol(characters[row][column + 1]) {
+        if is_symbol(characters[row][column + 1]).is_some() {
             return true;
         }
     }
     // below
     if row < characters.len() - 1 {
-        if is_symbol(characters[row + 1][column]) {
+        if is_symbol(characters[row + 1][column]).is_some() {
             return true;
         }
         if column > 1 {
-            if is_symbol(characters[row + 1][column - 1]) {
+            if is_symbol(characters[row + 1][column - 1]).is_some() {
                 return true;
             }
         }
@@ -47,7 +50,7 @@ fn check_for_symbols(characters: &Vec<Vec<char>>, row: usize, column: usize) -> 
             if characters[row][column] == '7' {
                 println!("hi");
             }
-            if is_symbol(characters[row + 1][column + 1]) {
+            if is_symbol(characters[row + 1][column + 1]).is_some() {
                 return true;
             }
         }
@@ -109,5 +112,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_part1_example() {}
+    fn test_part1() {
+        assert_eq!(day3("inputs/2023/day3.txt")[0], 498559);
+    }
 }
