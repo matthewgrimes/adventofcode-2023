@@ -24,6 +24,7 @@ fn main() {
         2023 => match args.day {
             1 => println!("{:?}", aoc2023::day1::day1(file_path.as_str())),
             2 => println!("{:?}", aoc2023::day2::day2(file_path.as_str())),
+            3 => println!("{:?}", aoc2023::day3::day3(file_path.as_str())),
             _ => (),
         },
         2015 => match args.day {
