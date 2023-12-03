@@ -30,6 +30,7 @@ fn main() {
             1 => println!("{:?}", aoc2015::day1::day1(file_path.as_str())),
             2 => println!("{:?}", aoc2015::day2::day2(file_path.as_str())),
             3 => println!("{:?}", aoc2015::day3::day3(file_path.as_str())),
+            4 => println!("{:?}", aoc2015::day4::day4(file_path.as_str())),
             _ => (),
         },
         _ => (),
