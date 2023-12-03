@@ -47,9 +47,7 @@ fn check_for_symbols(characters: &Vec<Vec<char>>, row: usize, column: usize) -> 
         }
 
         if column < characters[row + 1].len() - 1 {
-            if characters[row][column] == '7' {
-                println!("hi");
-            }
+            if characters[row][column] == '7' {}
             if is_symbol(characters[row + 1][column + 1]).is_some() {
                 return true;
             }
@@ -87,10 +85,6 @@ pub fn day3(input_file: &str) -> [i32; 2] {
         .collect::<Vec<Vec<char>>>();
     let numbers: Vec<Vec<(Vec<usize>, i32)>> =
         characters.iter().map(get_numbers_from_row).collect();
-    println!("{:?}", characters[0][2]);
-    println!("{:?}", characters[1].len());
-    println!("{:?}", characters[1][3]);
-    println!("{:?}", check_for_symbols(&characters, 0, 2));
     let mut sum = 0;
     for (row_index, row) in numbers.iter().enumerate() {
         for (indices, number) in row.iter() {
@@ -99,12 +93,41 @@ pub fn day3(input_file: &str) -> [i32; 2] {
                 .map(|&col_index| check_for_symbols(&characters, row_index, col_index))
                 .any(|x| x)
             {
-                println!("Valid: {}", number);
                 sum += number;
             }
         }
     }
-    [sum, 0]
+    let mut gear_ratio_sum = 0;
+    for (row_index, row) in characters.iter().enumerate() {
+        for (col_index, character) in row.iter().enumerate() {
+            if *character == '*' {
+                // need to check for adjacent numbers now
+                let mut potential_gear_numbers = vec![];
+                for (number_row_index, row) in numbers.iter().enumerate() {
+                    for (indices, number) in row.iter() {
+                        let mut is_adjacent = false;
+
+                        for number_col_index in indices.iter() {
+                            if is_adjacent {
+                                continue;
+                            }
+                            if (((col_index as isize) - (*number_col_index as isize)).abs() <= 1)
+                                & (((row_index as isize) - (number_row_index as isize)).abs() <= 1)
+                            {
+                                potential_gear_numbers.push(number);
+                                is_adjacent = true;
+                            }
+                        }
+                    }
+                }
+                println!("{:?}", potential_gear_numbers);
+                if potential_gear_numbers.len() == 2 {
+                    gear_ratio_sum += potential_gear_numbers[0] * potential_gear_numbers[1];
+                }
+            }
+        }
+    }
+    [sum, gear_ratio_sum]
 }
 
 #[cfg(test)]
@@ -113,6 +136,6 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        assert_eq!(day3("inputs/2023/day3.txt")[0], 498559);
+        assert_eq!(day3("inputs/2023/day3.txt"), [498559, 72246648]);
     }
 }
