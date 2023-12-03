@@ -1,39 +1,55 @@
 use crate::utils::*;
 
-fn is_symbol(character: &char) -> bool {
-    !character.is_digit(10) & (*character != '.')
+fn is_symbol(character: char) -> bool {
+    !character.is_digit(10) & (character != '.')
 }
 
-fn check_for_symbols(characters: Vec<Vec<&char>>, row: usize, column: usize) -> bool {
+fn check_for_symbols(characters: &Vec<Vec<char>>, row: usize, column: usize) -> bool {
     // row above if there is one
     if row > 1 {
         if is_symbol(characters[row - 1][column]) {
             return true;
         }
-        if (column > 1) & is_symbol(characters[row - 1][column - 1]) {
-            return true;
+        if column > 1 {
+            if is_symbol(characters[row - 1][column - 1]) {
+                return true;
+            }
         }
-        if (column < characters[row - 1].len()) & is_symbol(characters[row - 1][column + 1]) {
-            return true;
+        if column < characters[row - 1].len() - 1 {
+            if is_symbol(characters[row - 1][column + 1]) {
+                return true;
+            }
         }
     }
     // adjacent
-    if (column > 1) & is_symbol(characters[row][column - 1]) {
-        return true;
+    if (column > 1) {
+        if is_symbol(characters[row][(column as isize - 1) as usize]) {
+            return true;
+        }
     }
-    if (column < characters[row].len()) & is_symbol(characters[row][column + 1]) {
-        return true;
+    if (column < characters[row].len() - 1) {
+        if is_symbol(characters[row][column + 1]) {
+            return true;
+        }
     }
     // below
     if row < characters.len() - 1 {
         if is_symbol(characters[row + 1][column]) {
             return true;
         }
-        if (column > 1) & is_symbol(characters[row + 1][column - 1]) {
-            return true;
+        if column > 1 {
+            if is_symbol(characters[row + 1][column - 1]) {
+                return true;
+            }
         }
-        if (column < characters[row - 1].len()) & is_symbol(characters[row + 1][column + 1]) {
-            return true;
+
+        if column < characters[row + 1].len() - 1 {
+            if characters[row][column] == '7' {
+                println!("hi");
+            }
+            if is_symbol(characters[row + 1][column + 1]) {
+                return true;
+            }
         }
     }
     false
@@ -68,8 +84,24 @@ pub fn day3(input_file: &str) -> [i32; 2] {
         .collect::<Vec<Vec<char>>>();
     let numbers: Vec<Vec<(Vec<usize>, i32)>> =
         characters.iter().map(get_numbers_from_row).collect();
-    println!("{:?}", numbers);
-    [0, 0]
+    println!("{:?}", characters[0][2]);
+    println!("{:?}", characters[1].len());
+    println!("{:?}", characters[1][3]);
+    println!("{:?}", check_for_symbols(&characters, 0, 2));
+    let mut sum = 0;
+    for (row_index, row) in numbers.iter().enumerate() {
+        for (indices, number) in row.iter() {
+            if indices
+                .iter()
+                .map(|&col_index| check_for_symbols(&characters, row_index, col_index))
+                .any(|x| x)
+            {
+                println!("Valid: {}", number);
+                sum += number;
+            }
+        }
+    }
+    [sum, 0]
 }
 
 #[cfg(test)]
